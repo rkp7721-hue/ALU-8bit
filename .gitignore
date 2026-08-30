@@ -1,0 +1,10 @@
+# Simulation executables
+sim/
+*_sim
+
+# Generated VCD waveforms
+*.vcd
+
+# Tool/editor temporary files
+*.log
+*.tmp
