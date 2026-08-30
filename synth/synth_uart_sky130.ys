@@ -1,0 +1,31 @@
+# ===================================================
+# Yosys ASIC Synthesis Script for UART Top
+# Target: SkyWater 130nm High-Density (sky130_fd_sc_hd)
+# ===================================================
+
+# 1. Read Verilog RTL Source Files
+read_verilog rtl/uart_top.v
+read_verilog rtl/uart_tx.v
+read_verilog rtl/uart_rx.v
+read_verilog rtl/baud_tick_gen.v
+
+# 2. Check and Elaborate Hierarchy
+hierarchy -check -top uart_top
+
+# 3. High-Level Logic Synthesis
+synth -top uart_top
+
+# 4. Map Flip-Flops / Registers to SkyWater 130nm DFFs
+dfflibmap -liberty pdk/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# 5. Logic Optimization & Standard-Cell Technology Mapping
+abc -liberty pdk/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# 6. Clean up Unused Cells and Wires
+clean
+
+# 7. Print Final Standard-Cell & Area Report
+stat -liberty pdk/sky130_fd_sc_hd__tt_025C_1v80.lib -top uart_top
+
+# 8. Write Out the Final Gate-Level Netlist
+write_verilog synth/uart_top_sky130_netlist.v

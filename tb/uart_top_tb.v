@@ -22,13 +22,10 @@ module uart_top_tb;
 
 
     // ==========================================
-    // UART TOP DUT
+    // UART TOP DUT (Instantiated without parameters for GLS compatibility)
     // ==========================================
 
-    uart_top #(
-        .CLK_FREQ  (50_000_000),
-        .BAUD_RATE (9600)
-    ) dut (
+    uart_top dut (
         .clk      (clk),
         .reset    (reset),
 
@@ -124,7 +121,7 @@ module uart_top_tb;
 
     initial begin
 
-        $dumpfile("uart_top_waveform.vcd");
+        $dumpfile("waveforms/uart_top_waveform.vcd");
         $dumpvars(0, uart_top_tb);
 
         clk        = 1'b0;
